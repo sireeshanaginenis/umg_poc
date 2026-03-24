@@ -21,7 +21,7 @@ def load_data():
 
     train_df.columns = train_df.columns.str.strip()
     pred_df.columns = pred_df.columns.str.strip()
-
+    
     # Rename column
     pred_df.rename(columns={
         "2025–2026 Traction Driver": "Traction"
@@ -32,8 +32,8 @@ def load_data():
         df["Energy"] = pd.to_numeric(df["Energy"], errors="coerce")
         df["Valence"] = pd.to_numeric(df["Valence"], errors="coerce")
 
-    train_df = train_df.dropna(subset=["Energy", "Valence"])
-    pred_df = pred_df.dropna(subset=["Energy", "Valence"])
+    train_df = train_df.reset_index(drop=True)
+    pred_df = pred_df.reset_index(drop=True)
 
     return train_df, pred_df
 
@@ -45,7 +45,7 @@ historical_data, prediction_data = load_data()
 # -----------------------------------------------------
 
 st.header("1️⃣ Data Overview")
-st.dataframe(historical_data, use_container_width=True)
+st.dataframe(historical_data, use_container_width=True, hide_index=True)
 
 # -----------------------------------------------------
 # STEP 2 – AI PREDICTION (UPDATED ONLY HERE)
@@ -55,7 +55,7 @@ st.header("2️⃣ AI Prediction – Rising Artist Forecast")
 
 
 st.subheader("New Artist Data")
-st.dataframe(prediction_data, use_container_width=True)
+st.dataframe(prediction_data, use_container_width=True, hide_index=True)
 
 # -----------------------------------------------------
 # 🔥 NEW TRACTION SCORING (NLP BASED)
@@ -393,59 +393,64 @@ top_artists = ranking.head(4)
 st.success("Top Rising Artists Identified")
  
 st.dataframe(top_artists, width="stretch")
- 
-# ✅ CARD STYLE OUTPUT
-for _,row in top_artists.iterrows():
- 
-    confidence = round(row["TPS"],1)
- 
-    if confidence > 80:
-        label = "🚀 Rising Star"
-    elif confidence > 65:
-        label = "⭐ Strong Potential"
-    else:
-        label = "⚠ Watchlist Artist"
- 
-    st.markdown(f"""
-### 🎤 {row['Artist']}
- 
-Prediction Confidence: **{confidence}/100**
- 
-Viral Potential Score: **{round(row['Viral_Potential'],1)}**
- 
-Contextual Buzz Score: **{round(row['Contextual_Buzz'],1)}**
- 
-Competitive Advantage Score: **{round(row['Competitive_Score'],1)}**
- 
-Status: **{label}**
-""")
- 
- 
-# -----------------------------------------------------
-# A&R Decision Support (FINAL INSIGHT)
-# -----------------------------------------------------
- 
-st.header("🎯 A&R Decision Insights")
- 
-top_candidate = ranking.iloc[0]
- 
-st.markdown(f"""
- 
-### Recommended Artist to Acquire
- 
-**Artist:** {top_candidate['Artist']}
- 
-**TPS Score:** {round(top_candidate['TPS'],1)}
- 
-### Justification
- 
-• Strong viral potential from streaming growth  
-• High competitive advantage vs peer artists  
-• Strong listener retention signals  
- 
-### A&R Recommendation
- 
-➡ Consider **signing / partnership / promotion campaign** for this artist.
- 
-""")
- 
+st.subheader("🌟 Top Rising Artists Explorer")
+
+# 👉 Left panel: Artist list
+artist_names = top_artists["Artist"].tolist()
+
+selected_artist = st.selectbox(
+    "Select Artist",
+    artist_names
+)
+
+# 👉 Get selected row
+artist_row = top_artists[top_artists["Artist"] == selected_artist].iloc[0]
+
+confidence = round(artist_row["TPS"], 1)
+
+if confidence > 80:
+    label = "🚀 Rising Star"
+elif confidence > 65:
+    label = "⭐ Strong Potential"
+else:
+    label = "⚠ Watchlist"
+
+# 👉 Layout split
+col1, col2 = st.columns([1,2])
+
+# LEFT SIDE (clean identity)
+with col1:
+    st.markdown(f"## 🎤 {selected_artist}")
+    st.markdown(f"**{label}**")
+    st.markdown("---")
+
+    st.metric("Trend Score", confidence)
+
+# RIGHT SIDE (details)
+with col2:
+    st.markdown("### Performance Breakdown")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.metric("Viral Potential", round(artist_row["Viral_Potential"],1))
+
+    with c2:
+        st.metric("Audience Buzz", round(artist_row["Contextual_Buzz"],1))
+
+    with c3:
+        st.metric("Competitive Strength", round(artist_row["Competitive_Score"],1))
+
+    st.markdown("---")
+
+    st.markdown("### A&R Insight")
+
+    st.info(f"""
+    **{selected_artist}** shows strong signals across multiple dimensions.
+
+    • Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
+    • Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
+    • Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
+
+    👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
+    """)
