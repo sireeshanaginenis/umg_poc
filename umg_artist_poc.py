@@ -40,6 +40,21 @@ def load_data():
 
 historical_data, prediction_data = load_data()
 
+st.markdown("""
+<style>
+h1, h2, h3 {
+    letter-spacing: 0.5px;
+}
+
+div[data-testid="stCaptionContainer"] p {
+    font-size: 15px !important;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #2a2a2a !important;  /* strong dark caption */
+}
+</style>
+""", unsafe_allow_html=True)
+
 # -----------------------------------------------------
 # STEP 1 – TRAINING DATA (UNCHANGED)
 # -----------------------------------------------------
@@ -53,10 +68,10 @@ st.dataframe(historical_data, use_container_width=True, hide_index=True)
 # STEP 2 – AI PREDICTION (UPDATED ONLY HERE)
 # -----------------------------------------------------
 
-st.header("2️⃣ AI Prediction – Rising Artist Forecast")
+st.header("2️⃣ AI Engine - Breakout Predictor")
+st.caption("Data driven prediction that identifies future stars before they breakout.")
 
-
-st.subheader("New Artist Data")
+st.subheader("New Artists to be predicted")
 st.dataframe(prediction_data, use_container_width=True, hide_index=True)
 
 # -----------------------------------------------------
