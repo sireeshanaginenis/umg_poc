@@ -131,7 +131,7 @@ fig_pred = px.bar(
     x="Artist",
     y="AI_Score",
     color="Prediction",
-    title="Visualisation for Rising Artist Prediction Score"
+    title="Rising Artist with Prediction score"
 )
 
 st.plotly_chart(fig_pred, use_container_width=True)
@@ -238,6 +238,8 @@ st.plotly_chart(fig_social, use_container_width=True)
 # -----------------------------------------------------
  
 st.header("4️⃣ Artist Knowledge Graph")
+st.caption("Map the DNA of rising talent by linking them to established stars. Discover who they sound like, who they should collaborate with, and exactly where they fit in the current musical landscape based on genre, energy, and audio features.")
+ 
  
 G = nx.Graph()
  
