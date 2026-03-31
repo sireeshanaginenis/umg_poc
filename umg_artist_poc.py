@@ -47,7 +47,7 @@ h1, h2, h3 {
 }
 
 div[data-testid="stCaptionContainer"] p {
-    font-size: 15px !important;
+    font-size: 17px !important;
     line-height: 1.6;
     margin-bottom: 10px;
     color: #2a2a2a !important;  /* strong dark caption */
