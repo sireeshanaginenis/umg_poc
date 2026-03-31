@@ -8,6 +8,20 @@ import re
 
 st.set_page_config(layout="wide")
 
+st.markdown("""
+<style>
+/* Remove top padding */
+.block-container {
+    padding-top: 1rem !important;
+}
+
+/* Optional: tighten title spacing */
+h1 {
+    margin-top: 0px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.title("🎵 Rising Artist Prediction – AI A&R Platform")
 
 # -----------------------------------------------------
@@ -47,7 +61,7 @@ h1, h2, h3 {
 }
 
 div[data-testid="stCaptionContainer"] p {
-    font-size: 17px !important;
+    font-size: 16px !important;
     line-height: 1.6;
     margin-bottom: 10px;
     color: #2a2a2a !important;  /* strong dark caption */
@@ -59,7 +73,6 @@ div[data-testid="stCaptionContainer"] p {
 # STEP 1 – TRAINING DATA (UNCHANGED)
 # -----------------------------------------------------
 
-
 st.header("1️⃣ Data Pipeline - Historical Artist Data for Model Training")
 st.caption("Ingest, clean, and manage historical artist trajectories for both breakout successes and quiet fades. Continuously train, test, and sharpen predictive AI models.")
 st.dataframe(historical_data, use_container_width=True, hide_index=True)
@@ -70,6 +83,8 @@ st.dataframe(historical_data, use_container_width=True, hide_index=True)
 
 st.header("2️⃣ AI Engine - Breakout Predictor")
 st.caption("Data driven prediction that identifies future stars before they breakout.")
+
+
 
 st.subheader("New Artists to be predicted")
 st.dataframe(prediction_data, use_container_width=True, hide_index=True)
@@ -144,11 +159,9 @@ st.success(f"{len(selected_artists)} artists selected for deeper analysis")
 # -----------------------------------------------------
 # STEP 3 – Social Dynamics (UPDATED: X SIGNALS)
 # -----------------------------------------------------
-# -----------------------------------------------------
-# STEP 3 – Social Dynamics (X SIGNALS ONLY - FINAL)
-# -----------------------------------------------------
 
-st.header("3️⃣ Social Dynamics – Multi Platform Signals")
+
+st.header("3️⃣ Social Dynamics ( X, Instagram, Facebook... )")
 
 artists = selected_artists["Artist"].tolist()
 
@@ -193,7 +206,7 @@ social_data["Social_Momentum"] = (
 # -----------------------------------------------------
 # 🔥 SHOW FULL SOCIAL DATA (IMPORTANT FIX)
 # -----------------------------------------------------
-st.subheader("Social Signals Data (X Signals)")
+#st.subheader("Social Signals Data (X Signals)")
 st.dataframe(
     social_data[[
         "Artist",
@@ -229,7 +242,7 @@ fig_social = px.bar(
     social_data.sort_values("Social_Momentum", ascending=False),
     x="Artist",
     y="Social_Momentum",
-    title="Visualisation for Social Momentum Score (X Signals)"
+    title="Social Momentum Score (X Signals)"
 )
 
 st.plotly_chart(fig_social, use_container_width=True)
@@ -239,7 +252,6 @@ st.plotly_chart(fig_social, use_container_width=True)
  
 st.header("4️⃣ Artist Knowledge Graph")
 st.caption("Map the DNA of rising talent by linking them to established stars. Discover who they sound like, who they should collaborate with, and exactly where they fit in the current musical landscape based on genre, energy, and audio features.")
- 
  
 G = nx.Graph()
  
@@ -295,6 +307,7 @@ st.plotly_chart(fig, use_container_width=True)
 # -----------------------------------------------------
  
 st.header("5️⃣ Competitive Analysis")
+st.caption("AI compares each artist against a dynamically generated peer group of similar acts based on stage, genre, and audience size. The resulting Competitive Score factors in streaming velocity, social engagement, playlist and momentum to reveal market positioning and rank artists within their competitive landscape.")
  
 competitive_data = pd.DataFrame({
     "Artist": predicted_artists,
