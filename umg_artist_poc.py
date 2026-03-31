@@ -44,7 +44,9 @@ historical_data, prediction_data = load_data()
 # STEP 1 – TRAINING DATA (UNCHANGED)
 # -----------------------------------------------------
 
-st.header("1️⃣ Data Overview")
+
+st.header("1️⃣ Data Pipeline - Historical Artist Data for Model Training")
+st.caption("Ingest, clean, and manage historical artist trajectories for both breakout successes and quiet fades. Continuously train, test, and sharpen predictive AI models.")
 st.dataframe(historical_data, use_container_width=True, hide_index=True)
 
 # -----------------------------------------------------
