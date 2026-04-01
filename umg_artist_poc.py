@@ -447,42 +447,40 @@ elif confidence > 65:
 else:
     label = "⚠ Watchlist"
 
-# 👉 Layout split
-col1, col2 = st.columns([1,2])
+# -------------------------
+# TOP SECTION (LEFT + RIGHT)
+# -------------------------
+col1, col2 = st.columns([1,3])
 
-# LEFT SIDE (clean identity)
+# LEFT → Artist Identity ONLY
 with col1:
     st.markdown(f"## 🎤 {selected_artist}")
     st.markdown(f"**{label}**")
-    st.markdown("---")
 
-    st.metric("Trend Score", confidence)
-
-# RIGHT SIDE (details)
+# RIGHT → ALL METRICS IN ONE ROW
 with col2:
     st.markdown("### Performance Breakdown")
 
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3, c4 = st.columns(4)
 
-    with c1:
-        st.metric("Viral Potential", round(artist_row["Viral_Potential"],1))
+    c1.metric("Viral", round(artist_row["Viral_Potential"], 1))
+    c2.metric("Buzz", round(artist_row["Contextual_Buzz"], 1))
+    c3.metric("Strength", round(artist_row["Competitive_Score"], 1))
+    c4.metric("Trend Score", confidence)
 
-    with c2:
-        st.metric("Audience Buzz", round(artist_row["Contextual_Buzz"],1))
+# -------------------------
+# FULL WIDTH ROW (BOTTOM)
+# -------------------------
+st.markdown("---")
 
-    with c3:
-        st.metric("Competitive Strength", round(artist_row["Competitive_Score"],1))
+st.markdown("### A&R Reasoning")
 
-    st.markdown("---")
+st.info(f"""
+**{selected_artist}** shows strong signals across multiple dimensions.
 
-    st.markdown("### A&R Insight")
+• Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
+• Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
+• Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
 
-    st.info(f"""
-    **{selected_artist}** shows strong signals across multiple dimensions.
-
-    • Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
-    • Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
-    • Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
-
-    👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
-    """)
+👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
+""")
