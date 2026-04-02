@@ -475,31 +475,30 @@ with col2:
 st.markdown("---")
 
 st.markdown("### A&R Reasoning")
+st.markdown(f"""
+<div style="
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    line-height: 1.6;
+">
 
-st.info(f"""
-**{selected_artist}** has been identified as a rising artist through a structured multi-module pipeline:
+<b>{selected_artist}</b> has been identified as a rising artist through a structured multi-module pipeline:<br>
 
-• Started with the **AI Prediction Engine** to detect breakout potential  
-• Validated through **Social Dynamics analysis**, capturing momentum signals from platforms like X (Twitter), Instagram, and TikTok  
-• Further strengthened using a **Similarity Knowledge Graph**, linking the artist to past breakout performers  
+• Started with the <b>AI Prediction Engine</b> to detect breakout potential<br>
+• Validated through <b>Social Dynamics analysis</b>, capturing momentum signals from platforms like X (Twitter), Instagram, and TikTok<br>
+• Further strengthened using a <b>Similarity Knowledge Graph</b>, linking the artist to past breakout performers<br>
 
-• **Competitive analysis** evaluates strengths against peer artists  
-• Final ranking is driven by the **Trend Prediction Score (TPS)**  
+• <b>Competitive analysis</b> evaluates strengths against peer artists<br>
+• Final ranking is driven by the <b>Trend Prediction Score (TPS)</b><br>
 
-👉 TPS combines:
-- Social velocity  
-- Contextual buzz  
-- Competitive advantage  
+<b>TPS combines:</b><br>
+- Social velocity<br>
+- Contextual buzz<br>
+- Competitive advantage<br>
 
-This holistic pipeline ensures a data-driven and market-aligned identification of emerging talent.
-""")
+This pipeline ensures a data-driven and market-aligned identification of emerging talent.
 
-# st.info(f"""
-# **{selected_artist}** shows strong signals across multiple dimensions.
-
-# • Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
-# • Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
-# • Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
-
-# 👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
-# """)
+</div>
+""", unsafe_allow_html=True)
