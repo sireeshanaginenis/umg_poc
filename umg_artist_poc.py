@@ -302,6 +302,7 @@ node_trace = go.Scatter(
 fig = go.Figure(data=[edge_trace, node_trace])
 st.plotly_chart(fig, use_container_width=True)
  
+
 # -----------------------------------------------------
 # STEP 5 – Competitive Analysis
 # -----------------------------------------------------
@@ -476,11 +477,29 @@ st.markdown("---")
 st.markdown("### A&R Reasoning")
 
 st.info(f"""
-**{selected_artist}** shows strong signals across multiple dimensions.
+**{selected_artist}** has been identified as a rising artist through a structured multi-module pipeline:
 
-• Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
-• Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
-• Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
+• Started with the **AI Prediction Engine** to detect breakout potential  
+• Validated through **Social Dynamics analysis**, capturing momentum signals from platforms like X (Twitter), Instagram, and TikTok  
+• Further strengthened using a **Similarity Knowledge Graph**, linking the artist to past breakout performers  
 
-👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
+• **Competitive analysis** evaluates strengths against peer artists  
+• Final ranking is driven by the **Trend Prediction Score (TPS)**  
+
+👉 TPS combines:
+- Social velocity  
+- Contextual buzz  
+- Competitive advantage  
+
+This holistic pipeline ensures a data-driven and market-aligned identification of emerging talent.
 """)
+
+# st.info(f"""
+# **{selected_artist}** shows strong signals across multiple dimensions.
+
+# • Viral growth potential is {'high' if artist_row["Viral_Potential"] > 70 else 'moderate'}  
+# • Audience engagement is {'strong' if artist_row["Contextual_Buzz"] > 65 else 'emerging'}  
+# • Competitive positioning is {'leading' if artist_row["Competitive_Score"] > 70 else 'developing'}  
+
+# 👉 Recommendation: Focus on **promotion / partnerships / early signing strategy**
+# """)
